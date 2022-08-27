@@ -2,9 +2,7 @@ name: ci
 on:
   push:
     tags:
-      - v\d+.\d+.\d+
-    branches:
-      - main # CI TEST
+      - v\d+.\d+.\d\.*
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -29,6 +27,7 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=raw,value=latest
+            type=match,pattern=v(.*),group=1
 
       - name: Build and push
         uses: docker/build-push-action@v3
